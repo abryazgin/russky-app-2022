@@ -1,0 +1,10 @@
+fastapi[all]~=0.75.1
+unicorn
+requests
+mypy
+flake8
+black
+pytest
+isort
+unify
+pydantic~=1.9.0
