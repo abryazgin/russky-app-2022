@@ -9,3 +9,6 @@ isort
 unify
 pydantic~=1.9.0
 types-requests
+opentelemetry-sdk
+opentelemetry-instrumentation-fastapi
+elastic-apm
