@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 from pydantic import BaseSettings
 
@@ -15,9 +14,9 @@ class LoggingSetting(BaseSettings):
         env_prefix = 'LOGGING_'
 
 
-class CORSSettings(BaseSettings):
-    enabled: bool = True
-    origins: List[str] = ['http://localhost', 'http://localhost:8000']
+class DataSourceSetting(BaseSettings):
+    films_250_url: str = 'https://storage.yandexcloud.net/system-static.russky-devops.ru/films_top_250.json'
+    shazam_top_20_url: str = 'https://storage.yandexcloud.net/system-static.russky-devops.ru/music_shazam_20.json'
 
     class Config:
-        env_prefix = 'CORS'
+        env_prefix = 'DATA_SOURCE_'

@@ -15,3 +15,11 @@ Some application to demonstrate DevOps work
     ```bash
     make run
     ```
+  
+## TODO
+
+* secrets - credentials of blob storage
+* docker-compose with:
+    * jaeger
+    * ELK
+    * Grafana
