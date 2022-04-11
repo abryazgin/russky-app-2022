@@ -10,7 +10,7 @@ add_local_env_file:
     # https://www.elastic.co/guide/en/apm/get-started/current/open-telemetry-elastic.html
 	echo EOF > .env
 	export OTEL_RESOURCE_ATTRIBUTES=service.name=russky-app-2022,service.version=1.0,deployment.environment=dev
-	export OTEL_EXPORTER_OTLP_ENDPOINT=https://localhost:8200
+	export OTEL_EXPORTER_OTLP_ENDPOINT=http://0.0.0.0:8200
 	#export OTEL_EXPORTER_OTLP_HEADERS="Authorization=Bearer an_apm_secret_token"
 	EOF
 
@@ -30,4 +30,4 @@ pretty:
 plint: pretty lint
 
 run:
-	$(BIN)uvicorn russky.app:app --reload
+	opentelemetry-instrument uvicorn russky.app:app --reload --host 0.0.0.0
