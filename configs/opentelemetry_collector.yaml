@@ -20,12 +20,12 @@ exporters:
 service:
   pipelines:
     traces:
-      receivers: [otlp]
-      exporters: [logging, otlp/elastic]
+      receivers: [ otlp ]
+      exporters: [ logging, otlp/elastic ]
     metrics:
-      receivers: [otlp]
-      exporters: [logging, otlp/elastic]
+      receivers: [ otlp ]
+      exporters: [ logging, otlp/elastic ]
     logs:
-      receivers: [otlp]
-      exporters: [logging, otlp/elastic]
+      receivers: [ otlp ]
+      exporters: [ logging, otlp/elastic ]
 

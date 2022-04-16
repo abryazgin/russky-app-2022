@@ -1,5 +1,15 @@
 version: '2'
 services:
+
+    app:
+        build: .
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./russky:/usr/src/app/russky
+        env_file:
+            - .env.dev
+
     # https://elk-docker.readthedocs.io/
     elk:
         image: sebp/elk
@@ -15,14 +25,7 @@ services:
             - "8200:8200"  # APM Server
         command: ./apm-server -e -E output.elasticsearch.hosts=elk:9200 -E apm-server.host=0.0.0.0:8200
 
-    app:
-        build: .
-        ports:
-            - "8000:8000"
+    heartbeat:
+        image: elastic/heartbeat:8.1.2
         volumes:
-            - ./russky:/usr/src/app/russky
-        environment:
-            - OTEL_RESOURCE_ATTRIBUTES=service.name=russky-app-2022,service.version=1.0,deployment.environment=dev
-            - OTEL_EXPORTER_OTLP_ENDPOINT=http://apm-server:8200
-            - ELASTIC_APM_SERVER_ENDPOINT=apm-server:8200
-
+            - ./configs/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro

@@ -15,6 +15,14 @@ Some application to demonstrate DevOps work
     ```bash
     make run
     ```
+
+## Cheatsheets
+
+### Start ELK
+
+```bash
+sudo sysctl -w vm.max_map_count=262144
+```
   
 ## TODO
 
