@@ -1,0 +1,31 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 2000
+  batch:
+
+exporters:
+  logging:
+    loglevel: info
+  otlp/elastic:
+    # Elastic APM server https endpoint without the "https://" prefix
+    endpoint: "${ELASTIC_APM_SERVER_ENDPOINT}"
+
+service:
+  pipelines:
+    traces:
+      receivers: [ otlp ]
+      exporters: [ logging, otlp/elastic ]
+    metrics:
+      receivers: [ otlp ]
+      exporters: [ logging, otlp/elastic ]
+    logs:
+      receivers: [ otlp ]
+      exporters: [ logging, otlp/elastic ]
+

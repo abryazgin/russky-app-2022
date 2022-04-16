@@ -1,4 +1,4 @@
-fastapi[all]~=0.75.1
+fastapi[all]
 unicorn
 requests
 mypy
@@ -10,5 +10,10 @@ unify
 pydantic~=1.9.0
 types-requests
 opentelemetry-sdk
+opentelemetry-exporter-otlp
 opentelemetry-instrumentation-fastapi
-elastic-apm
+opentelemetry-instrumentation-logging
+opentelemetry-instrumentation-asgi
+opentelemetry-instrumentation-jinja2
+opentelemetry-instrumentation-requests
+psutil  # needed to get ram and cpu usage in the observer example
