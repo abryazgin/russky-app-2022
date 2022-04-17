@@ -3,9 +3,6 @@ FROM python:3
 RUN apt-get update
 RUN apt-get -y install wget systemctl
 
-RUN wget https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.44.0/otelcol_0.44.0_linux_amd64.deb
-RUN dpkg -i otelcol_0.44.0_linux_amd64.deb
-
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./

@@ -9,6 +9,7 @@ services:
             - ./russky:/usr/src/app/russky
         env_file:
             - .env.dev
+            - .env
 
     # https://elk-docker.readthedocs.io/
     elk:
@@ -25,7 +26,17 @@ services:
             - "8200:8200"  # APM Server
         command: ./apm-server -e -E output.elasticsearch.hosts=elk:9200 -E apm-server.host=0.0.0.0:8200
 
+    metricbeat:
+        image: elastic/metricbeat:8.1.2
+        volumes:
+            - ./configs/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+
     heartbeat:
         image: elastic/heartbeat:8.1.2
         volumes:
             - ./configs/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
+
+    filebeat:
+        image: elastic/filebeat:8.1.2
+        volumes:
+            - ./configs/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro

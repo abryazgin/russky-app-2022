@@ -1,10 +1,5 @@
 # https://www.elastic.co/guide/en/beats/heartbeat/current/configuration-heartbeat-options.html
 heartbeat.monitors:
-- type: icmp
-  id: ping-app-host
-  name: Ping host
-  hosts: ["app"]
-  schedule: '*/5 * * * * * *'
 - type: http
   id: app-health
   name: App Health
@@ -14,7 +9,10 @@ heartbeat.monitors:
   schedule: '@every 5s'
 
 processors:
-- add_cloud_metadata: ~
+- add_observer_metadata:
+    geo:
+      # Token describing this location
+    hosts: '${LOCATION:localhost}'
 
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_HOSTS:elk:9200}'

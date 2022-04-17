@@ -15,7 +15,7 @@ exporters:
     loglevel: info
   otlp/elastic:
     # Elastic APM server https endpoint without the "https://" prefix
-    endpoint: "${ELASTIC_APM_SERVER_ENDPOINT}"
+    endpoint: apm-server:8200
 
 service:
   pipelines:
@@ -28,4 +28,3 @@ service:
     logs:
       receivers: [ otlp ]
       exporters: [ logging, otlp/elastic ]
-

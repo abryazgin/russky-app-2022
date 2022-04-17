@@ -1,0 +1,3 @@
+# https://www.elastic.co/guide/en/beats/heartbeat/current/configuration-heartbeat-options.html
+output.elasticsearch.hosts: '${ELASTICSEARCH_HOSTS:elk:9200}'
+setup.kibana.host: "elk:5601"
