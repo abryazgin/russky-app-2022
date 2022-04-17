@@ -7,6 +7,7 @@ services:
             - "8000:8000"
         volumes:
             - ./russky:/usr/src/app/russky
+            - /var/log/russky:/var/log/russky
         env_file:
             - .env.dev
             - .env
@@ -30,13 +31,22 @@ services:
         image: elastic/metricbeat:8.1.2
         volumes:
             - ./configs/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+            # https://www.elastic.co/guide/en/beats/metricbeat/8.1/running-on-docker.html#monitoring-host
+            - /proc:/hostfs/proc:ro
+            - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+            - /:/hostfs:ro
+        network_mode: "host"
+        entrypoint: metricbeat -e -system.hostfs=/hostfs
 
     heartbeat:
         image: elastic/heartbeat:8.1.2
         volumes:
             - ./configs/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
 
+    # https://www.elastic.co/guide/en/cloud/current/ec-getting-started-search-use-cases-python-logs.html
     filebeat:
         image: elastic/filebeat:8.1.2
         volumes:
             - ./configs/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+            - /var/log/russky:/var/log/russky
+        # ./filebeat setup -e

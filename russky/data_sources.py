@@ -1,9 +1,10 @@
 import random
-from typing import List, Union
+from typing import List, Union, Dict
 
+import elasticapm
 import requests
 
-from russky.models import FilmRecommendation, MusicRecommendation
+from russky.models import FilmRecommendation, MusicRecommendation, RecommendationType
 from russky.settings import DataSourceSetting
 
 
@@ -11,13 +12,21 @@ class MulitpleDataSources:
     def __init__(self, data_source_settings: DataSourceSetting):
         self.films = FilmsDataSource(data_source_settings.films_250_url)
         self.music = ShazamDataSource(data_source_settings.shazam_top_20_url)
-        self.data_sources: List[Union[FilmsDataSource, ShazamDataSource]] = [
-            self.films,
-            self.music,
-        ]
+        self.data_sources_map: Dict[str, Union[FilmsDataSource, ShazamDataSource]] = {
+            RecommendationType.film.name: self.films,
+            RecommendationType.music.name: self.music,
+        }
+        self.data_sources: List[Union[FilmsDataSource, ShazamDataSource]] = list(self.data_sources_map.values())
 
+    @elasticapm.capture_span("MulitpleDataSources.get_random_recommendation")
     def get_random_recommendation(self) -> Union[FilmRecommendation, MusicRecommendation]:
         return random.choice(self.data_sources).get_random_recommendation()
+
+    @elasticapm.capture_span("MulitpleDataSources.get_random_recommendation_by_type")
+    def get_random_recommendation_by_type(
+            self, recommendation_type: str
+    ) -> Union[FilmRecommendation, MusicRecommendation]:
+        return self.data_sources_map[recommendation_type].get_random_recommendation()
 
 
 class FilmsDataSource:
@@ -51,6 +60,7 @@ class FilmsDataSource:
             for i in cache['items']
         ]
 
+    @elasticapm.capture_span("FilmsDataSource.get_random_recommendation")
     def get_random_recommendation(self) -> FilmRecommendation:
         return random.choice(self.recommendations)
 
@@ -161,5 +171,6 @@ class ShazamDataSource:
             for i in cache['tracks']
         ]
 
+    @elasticapm.capture_span("ShazamDataSource.get_random_recommendation")
     def get_random_recommendation(self) -> MusicRecommendation:
         return random.choice(self.recommendations)
