@@ -2,5 +2,5 @@
 
 uvicorn \
     russky.app:app \
-    --reload \
-    --host 0.0.0.0
+    --host 0.0.0.0 \
+    --port 80
