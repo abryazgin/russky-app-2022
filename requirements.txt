@@ -1,5 +1,5 @@
 fastapi[all]
-unicorn
+uvicorn
 requests
 mypy
 flake8
