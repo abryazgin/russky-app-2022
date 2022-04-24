@@ -1,4 +1,5 @@
 import logging
+import os
 
 import ecs_logging
 from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
@@ -15,7 +16,7 @@ def setup_tracing():
 
 
 def setup_logging():
-    handler = logging.FileHandler('/var/log/russky/application.log')
+    handler = logging.FileHandler(os.getenv('LOG_PATH', '/var/log/russky/application.log'))
     handler.setFormatter(ecs_logging.StdlibFormatter())
     logging.basicConfig(
         level=logging.INFO,
