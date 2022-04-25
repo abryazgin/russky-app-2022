@@ -31,8 +31,8 @@ docker login --username oauth --password <token> cr.yandex
 #### Build
 
 ```bash
-docker-compose build app
-docker-compose push app
+docker build -t cr.yandex/<registry id>/russky-app-2022 .
+docker push cr.yandex/<registry id>/russky-app-2022
 ```
 
 #### Run on VM
