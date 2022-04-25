@@ -16,7 +16,7 @@ def setup_tracing():
 
 
 def setup_logging():
-    handler = logging.FileHandler(os.getenv('LOG_PATH', '/var/log/russky/application.log'))
+    handler = logging.FileHandler(os.getenv('LOG_PATH', 'russky.log'))
     handler.setFormatter(ecs_logging.StdlibFormatter())
     logging.basicConfig(
         level=logging.INFO,

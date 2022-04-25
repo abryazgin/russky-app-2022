@@ -1,18 +1,19 @@
 from fastapi.testclient import TestClient
 
-from russky.app import app, data_sources
+from russky.app import app
+from russky.di import DI
 from russky.models import MusicRecommendation
 
 client = TestClient(app)
 
 
 def test_film_recommendation():
-    data_sources.films.get_random_recommendation()
+    DI.data_sources.films.get_random_recommendation()
 
 
 def test_music_recommendation():
-    assert len(data_sources.music.recommendations) == 20
-    assert data_sources.music.recommendations[0] == MusicRecommendation(
+    assert len(DI.data_sources.music.recommendations) == 20
+    assert DI.data_sources.music.recommendations[0] == MusicRecommendation(
         image='https://is3-ssl.mzstatic.com/image/thumb/Music112/v4/73/b9/e4/73b9e493-5bb1-7008-8fe4-ce13b8898fe5'
         '/194690771811_cover.jpg/400x400cc.jpg',
         name='Kwaku the Traveller - Black Sherif',
