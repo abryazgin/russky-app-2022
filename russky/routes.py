@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 @app.get('/', response_class=HTMLResponse)
 @app.get('/recommend', response_class=HTMLResponse)
 async def random(request: Request) -> _TemplateResponse:
-    logger.info("get absolutely random recommendation")
+    logger.info('get absolutely random recommendation')
     return DI.templates.TemplateResponse(
         'recommendations/index.html',
         {'request': request, 'recommendation': DI.data_sources.get_random_recommendation()},
@@ -23,7 +23,7 @@ async def random(request: Request) -> _TemplateResponse:
 
 @app.get('/recommend/{recommendation_type}', response_class=HTMLResponse)
 async def random_by_type(request: Request, recommendation_type: str) -> _TemplateResponse:
-    logger.info(f"get random recommendation for {recommendation_type}")
+    logger.info(f'get random recommendation for {recommendation_type}')
     return DI.templates.TemplateResponse(
         'recommendations/index.html',
         {'request': request, 'recommendation': DI.data_sources.get_random_recommendation_by_type(recommendation_type)},

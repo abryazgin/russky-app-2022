@@ -2,7 +2,7 @@ import logging
 import os
 
 import ecs_logging
-from elasticapm.contrib.starlette import make_apm_client, ElasticAPM
+from elasticapm.contrib.starlette import ElasticAPM, make_apm_client
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
@@ -10,12 +10,12 @@ app = FastAPI()
 app.mount('/static', StaticFiles(directory='static'), name='static')
 
 
-def setup_tracing():
+def setup_tracing() -> None:
     apm = make_apm_client()
     app.add_middleware(ElasticAPM, client=apm)
 
 
-def setup_logging():
+def setup_logging() -> None:
     handler = logging.FileHandler(os.getenv('LOG_PATH', 'russky.log'))
     handler.setFormatter(ecs_logging.StdlibFormatter())
     logging.basicConfig(
