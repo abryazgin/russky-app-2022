@@ -56,9 +56,9 @@ docker-compose push app
 * Run docker image with auto-restart
   ```bash
   # simple run
-  docker run -p 80:80 --pull always cr.yandex/crphntksaqh2dho7ale3/russky-app-2022
+  docker run -p 8080:8080 --pull always cr.yandex/crphntksaqh2dho7ale3/russky-app-2022
   # daemonized run with auto-restart
-  docker run -p 80:80 --pull always -d --restart unless-stopped cr.yandex/crphntksaqh2dho7ale3/russky-app-2022
+  docker run -p 8080:8080 --pull always -d --restart unless-stopped cr.yandex/crphntksaqh2dho7ale3/russky-app-2022
   ```
 
 ### Start ELK
