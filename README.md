@@ -67,6 +67,24 @@ docker push cr.yandex/<registry id>/russky-app-2022
 sudo sysctl -w vms.tf.max_map_count=262144
 ```
 
+### Prepare CI/CD
+
+By [deploy instruction](https://cloud.yandex.ru/docs/cos/tutorials/vm-update) (login instruction - [link](https://cloud.yandex.ru/docs/cli/quickstart))
+
+1. List service accounts
+  ```bash
+  yc iam service-account --folder-id <folder_id> list
+  ```
+2. Generate service-account key
+  ```bash
+  yc iam key create --folder-id  <folder_id> --service-account-name <sa name> --output key.json
+  ```
+3. Put secrets in GitHub:
+   * `YC_SA_KEY_JSON` with content of key.json
+   * `YC_CLOUD_ID` = b1g9gudn8fcfil33r2v9
+   * `YC_FOLDER_ID` = <folder_id>
+   * `YC_INSTANCE_GROUP_ID` = <instance_group_id>
+
 ## TODO
 
 * ELK alerts
