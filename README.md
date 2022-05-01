@@ -66,6 +66,7 @@ docker push cr.yandex/<registry id>/russky-app-2022
 ```bash
 sudo sysctl -w vms.tf.max_map_count=262144
 ```
+or https://stackoverflow.com/questions/42889241/how-to-increase-vm-max-map-count
 
 ### Prepare CI/CD
 
