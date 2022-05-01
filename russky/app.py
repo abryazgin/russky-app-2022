@@ -11,6 +11,9 @@ app.mount('/static', StaticFiles(directory='static'), name='static')
 
 
 def setup_tracing() -> None:
+    if not os.getenv('ELASTIC_APM_SERVICE_NAME'):
+        return
+
     apm = make_apm_client()
     app.add_middleware(ElasticAPM, client=apm)
 
