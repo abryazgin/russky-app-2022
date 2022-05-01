@@ -1,4 +1,5 @@
 import random
+import logging
 from typing import Dict, List, Union
 
 import elasticapm
@@ -8,8 +9,12 @@ from russky.models import FilmRecommendation, MusicRecommendation, Recommendatio
 from russky.settings import DataSourceSetting
 
 
+logger = logging.getLogger(__name__)
+
+
 class MulitpleDataSources:
     def __init__(self, data_source_settings: DataSourceSetting):
+        logger.info("MulitpleDataSources: started")
         self.films = FilmsDataSource(data_source_settings.films_250_url)
         self.music = ShazamDataSource(data_source_settings.shazam_top_20_url)
         self.data_sources_map: Dict[str, Union[FilmsDataSource, ShazamDataSource]] = {
@@ -17,6 +22,7 @@ class MulitpleDataSources:
             RecommendationType.music.name: self.music,
         }
         self.data_sources: List[Union[FilmsDataSource, ShazamDataSource]] = list(self.data_sources_map.values())
+        logger.info("MulitpleDataSources: prepared")
 
     @elasticapm.capture_span('MulitpleDataSources.get_random_recommendation')
     def get_random_recommendation(self) -> Union[FilmRecommendation, MusicRecommendation]:
@@ -51,6 +57,7 @@ class FilmsDataSource:
     """  # noqa
 
     def __init__(self, url: str):
+        logger.info("FilmsDataSource: started")
         cache = requests.get(url).json()
         self.recommendations = [
             FilmRecommendation(
@@ -59,6 +66,7 @@ class FilmsDataSource:
             )
             for i in cache['items']
         ]
+        logger.info("FilmsDataSource: prepared")
 
     @elasticapm.capture_span('FilmsDataSource.get_random_recommendation')
     def get_random_recommendation(self) -> FilmRecommendation:
@@ -161,6 +169,7 @@ class ShazamDataSource:
     """  # noqa
 
     def __init__(self, url: str):
+        logger.info("ShazamDataSource: started")
         cache = requests.get(url).json()
         self.recommendations = [
             MusicRecommendation(
@@ -170,6 +179,7 @@ class ShazamDataSource:
             )
             for i in cache['tracks']
         ]
+        logger.info("ShazamDataSource: prepared")
 
     @elasticapm.capture_span('ShazamDataSource.get_random_recommendation')
     def get_random_recommendation(self) -> MusicRecommendation:
