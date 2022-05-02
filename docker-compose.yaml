@@ -3,7 +3,7 @@ services:
 
     app:
         build: .
-        image: cr.yandex/crphntksaqh2dho7ale3/russky-app-2022:latest # registry-yndx-dm-fish2
+        image: cr.yandex/crp8u2k51t5vdrd5j1t5/russky-app-2022:latest # registry-yndx-dm-fish2
         ports:
             - "8080:8080"
         volumes:
