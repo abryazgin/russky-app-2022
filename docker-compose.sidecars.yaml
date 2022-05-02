@@ -1,5 +1,18 @@
 version: '2'
 services:
+    app:
+        build: .
+        image: cr.yandex/crphntksaqh2dho7ale3/russky-app-2022:latest # registry-yndx-dm-fish2
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./russky:/usr/src/app/russky
+            - /var/log/russky:/var/log/russky
+        environment:
+            - ELASTIC_APM_SERVICE_NAME=russky-app-2022
+            - ELASTIC_APM_SERVER_URL=http://elk.system:8200
+            - ELASTIC_APM_ENVIRONMENT=localhost
+            - ELASTIC_APM_SERVICE_VERSION=1.0
 
     metricbeat:
         image: elastic/metricbeat:8.1.2
