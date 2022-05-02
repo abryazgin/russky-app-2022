@@ -46,4 +46,4 @@ jobs:
           yc config profile create sa-profile
           echo "${YC_SA_KEY_JSON_CONTEXT}" > key.json
           yc config set service-account-key key.json
-          yc compute instance-group update --id ${{ secrets.YC_INSTANCE_GROUP_ID }} --variables docker-tag=${DOCKER_TAG}
+          yc compute instance-group update --id ${{ secrets.YC_INSTANCE_GROUP_ID }} --variables docker-tag=${DOCKER_TAG} --variables registry_id=${{ secrets.CONTAINER_REGISTRY_ID }} --variables environment=${GITHUB_REPOSITORY_OWNER}
