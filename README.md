@@ -31,8 +31,8 @@ docker login --username oauth --password <token> cr.yandex
 #### Build
 
 ```bash
-docker-compose build app
-docker-compose push app
+docker build -t cr.yandex/<registry id>/russky-app-2022 .
+docker push cr.yandex/<registry id>/russky-app-2022
 ```
 
 #### Run on VM
@@ -56,9 +56,9 @@ docker-compose push app
 * Run docker image with auto-restart
   ```bash
   # simple run
-  docker run -p 80:80 --pull always cr.yandex/crphntksaqh2dho7ale3/russky-app-2022
+  docker run -it -p 8080:8080 --pull always cr.yandex/crphntksaqh2dho7ale3/russky-app-2022
   # daemonized run with auto-restart
-  docker run -p 80:80 --pull always -d --restart unless-stopped cr.yandex/crphntksaqh2dho7ale3/russky-app-2022
+  docker run -it -p 8080:8080 --pull always -d --restart unless-stopped cr.yandex/crphntksaqh2dho7ale3/russky-app-2022
   ```
 
 ### Start ELK
@@ -66,6 +66,25 @@ docker-compose push app
 ```bash
 sudo sysctl -w vms.tf.max_map_count=262144
 ```
+or https://stackoverflow.com/questions/42889241/how-to-increase-vm-max-map-count
+
+### Prepare CI/CD
+
+By [deploy instruction](https://cloud.yandex.ru/docs/cos/tutorials/vm-update) (login instruction - [link](https://cloud.yandex.ru/docs/cli/quickstart))
+
+1. List service accounts
+  ```bash
+  yc iam service-account --folder-id <folder_id> list
+  ```
+2. Generate service-account key
+  ```bash
+  yc iam key create --folder-id  <folder_id> --service-account-name <sa name> --output key.json
+  ```
+3. Put secrets in GitHub:
+   * `YC_SA_KEY_JSON` with content of key.json
+   * `YC_CLOUD_ID` = b1g9gudn8fcfil33r2v9
+   * `YC_FOLDER_ID` = <folder_id>
+   * `YC_INSTANCE_GROUP_ID` = <instance_group_id>
 
 ## TODO
 

@@ -3,51 +3,14 @@ services:
 
     app:
         build: .
-        image: cr.yandex/crphntksaqh2dho7ale3/russky-app-2022 # registry-yndx-dm-fish2
+        image: cr.yandex/crphntksaqh2dho7ale3/russky-app-2022:latest # registry-yndx-dm-fish2
         ports:
-            - "8000:8000"
+            - "8080:8080"
         volumes:
             - ./russky:/usr/src/app/russky
             - /var/log/russky:/var/log/russky
-        env_file:
-            - .env.dev
-            - .env
-
-    # https://elk-docker.readthedocs.io/
-    elk:
-        image: sebp/elk
-        ports:
-            - "5601:5601"  # Kibana
-            - "9200:9200"  # Elastic
-            - "5044:5044"  # Logstash / Beats
-
-    # https://www.elastic.co/guide/en/apm/server/current/getting-started-apm-server.html
-    apm-server:
-        image: store/elastic/apm-server:7.17.2
-        ports:
-            - "8200:8200"  # APM Server
-        command: ./apm-server -e -E output.elasticsearch.hosts=elk:9200 -E apm-server.host=0.0.0.0:8200
-
-    metricbeat:
-        image: elastic/metricbeat:8.1.2
-        volumes:
-            - ./configs/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
-            # https://www.elastic.co/guide/en/beats/metricbeat/8.1/running-on-docker.html#monitoring-host
-            - /proc:/hostfs/proc:ro
-            - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-            - /:/hostfs:ro
-        network_mode: "host"
-        entrypoint: metricbeat -e -system.hostfs=/hostfs
-
-    heartbeat:
-        image: elastic/heartbeat:8.1.2
-        volumes:
-            - ./configs/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
-
-    # https://www.elastic.co/guide/en/cloud/current/ec-getting-started-search-use-cases-python-logs.html
-    filebeat:
-        image: elastic/filebeat:8.1.2
-        volumes:
-            - ./configs/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-            - /var/log/russky:/var/log/russky
-        # ./filebeat setup -e
+        environment:
+            - ELASTIC_APM_SERVICE_NAME=russky-app-2022
+            - ELASTIC_APM_SERVER_URL=http://elk.system:8200
+            - ELASTIC_APM_ENVIRONMENT=localhost
+            - ELASTIC_APM_SERVICE_VERSION=1.0
