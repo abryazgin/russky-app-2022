@@ -23,7 +23,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: cr.yandex/${{ secrets.CONTAINER_REGISTRY_ID }}
-          username: ${{ secrets.CONTAINER_REGISTRY_LOGIN }}
+          username: oauth
           password: ${{ secrets.CONTAINER_REGISTRY_TOKEN }}
       - name: Generate tag
         run: |
