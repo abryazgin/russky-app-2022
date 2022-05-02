@@ -8,7 +8,7 @@
 <div class="avatar">
     <img src="{{ url_for('avatar') }}" width="50" height="50">
 </div>
-<div class="recommendation">
+<div class="recommendation" style="background-color: #3c3f41">
     {% if recommendation['type'].name == 'film' %}
         {% include 'recommendations/film.html' %}
     {% endif %}
