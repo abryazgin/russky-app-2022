@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-broken_files=`grep -UIlr $(printf '\r\n') $1`
+broken_files=`grep -UIlr --exclude-dir=.git --binary-files=without-match $(printf '\r\n') $1`
 
 if [ ! -z "$broken_files" ]
 then
