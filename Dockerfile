@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN mkdir /var/log/russky
 
-COPY configs/opentelemetry_collector.yaml /etc/otelcol/config.yaml
+#COPY configs/opentelemetry_collector.yaml /etc/otelcol/config.yaml
 COPY ./Makefile .
 COPY ./static static
 COPY ./templates templates
