@@ -5,6 +5,7 @@ SRC = .
 TEST = tests
 OTEL_ENVS = ""
 HTTP_PORT = 8080
+WORKERS_COUNT = 2
 
 test:
 	PYTHONPATH=$(SRC) pytest --verbosity=2 --showlocals --strict-markers $(TEST)
@@ -23,3 +24,6 @@ plint: pretty lint
 
 run:
 	uvicorn russky.app:app --host 0.0.0.0 --port $(HTTP_PORT)
+
+run-parallel:
+	gunicorn -w $(WORKERS_COUNT) app:app --host 0.0.0.0 --port $(HTTP_PORT)
