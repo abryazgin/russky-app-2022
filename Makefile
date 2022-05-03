@@ -26,4 +26,4 @@ run:
 	uvicorn russky.app:app --host 0.0.0.0 --port $(HTTP_PORT)
 
 run-parallel:
-	gunicorn -w $(WORKERS_COUNT) app:app --host 0.0.0.0 --port $(HTTP_PORT)
+	gunicorn russky.app:app -w $(WORKERS_COUNT) -k uvicorn.workers.UvicornWorker -b :$(HTTP_PORT)
