@@ -15,4 +15,4 @@ COPY ./static static
 COPY ./templates templates
 COPY ./russky russky
 
-CMD [ "make", "run" ]
+CMD [ "make", "run-parallel" ]
