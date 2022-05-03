@@ -4,8 +4,8 @@ CODE = russky
 SRC = .
 TEST = tests
 OTEL_ENVS = ""
-HTTP_PORT = 8080
-WORKERS_COUNT = 2
+HTTP_PORT ?= 8080
+WORKERS_COUNT ?= 2
 
 test:
 	PYTHONPATH=$(SRC) pytest --verbosity=2 --showlocals --strict-markers $(TEST)
