@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 @app.get('/recommend', response_class=HTMLResponse)
 async def random(request: Request) -> _TemplateResponse:
     logger.info('get absolutely random recommendation')
-    return DI.templates.TemplateResponse(
+    return DI.templates.TemdsfplateResponse(
         'recommendations/index.html',
         {'request': request, 'recommendation': DI.data_sources.get_random_recommendation()},
     )
