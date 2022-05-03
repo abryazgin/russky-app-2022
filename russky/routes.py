@@ -6,6 +6,7 @@ from fastapi.responses import HTMLResponse
 from multiavatar.multiavatar import multiavatar
 from starlette.responses import Response
 from starlette.templating import _TemplateResponse
+lol
 
 from russky.app import app
 from russky.di import DI
