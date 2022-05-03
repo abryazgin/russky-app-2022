@@ -1,5 +1,6 @@
 fastapi[all]
 uvicorn
+gunicorn
 requests
 mypy
 flake8
