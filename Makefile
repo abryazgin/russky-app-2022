@@ -4,6 +4,7 @@ CODE = russky
 SRC = .
 TEST = tests
 OTEL_ENVS = ""
+HTTP_PORT = 8080
 
 test:
 	PYTHONPATH=$(SRC) pytest --verbosity=2 --showlocals --strict-markers $(TEST)
@@ -21,4 +22,4 @@ pretty:
 plint: pretty lint
 
 run:
-	$(CODE)/start.sh
+	uvicorn russky.app:app --host 0.0.0.0 --port $(HTTP_PORT)

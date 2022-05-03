@@ -5,6 +5,9 @@
     <link id="favicon" rel="icon" type="image/x-icon" href="static/favicon.ico">
 </head>
 <body>
+<div class="avatar">
+    <img src="{{ url_for('avatar') }}" width="50" height="50">
+</div>
 <div class="recommendation">
     {% if recommendation['type'].name == 'film' %}
         {% include 'recommendations/film.html' %}
