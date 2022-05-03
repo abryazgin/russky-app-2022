@@ -11,3 +11,4 @@ pydantic~=1.9.0
 types-requests
 ecs-logging
 elastic-apm
+multiavatar
