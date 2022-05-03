@@ -6,7 +6,7 @@ from fastapi.responses import HTMLResponse
 from multiavatar.multiavatar import multiavatar
 from starlette.responses import Response
 from starlette.templating import _TemplateResponse
-
+    sd
 from russky.app import app
 from russky.di import DI
 from russky.models import RecommendationResponse
