@@ -66,6 +66,7 @@ docker push cr.yandex/<registry id>/russky-app-2022
 ```bash
 sudo sysctl -w vms.tf.max_map_count=262144
 ```
+or https://stackoverflow.com/questions/42889241/how-to-increase-vm-max-map-count
 
 ### Prepare CI/CD
 
@@ -80,9 +81,10 @@ By [deploy instruction](https://cloud.yandex.ru/docs/cos/tutorials/vm-update) (l
   yc iam key create --folder-id  <folder_id> --service-account-name <sa name> --output key.json
   ```
 3. Put secrets in GitHub:
+
+   * `CONTAINER_REGISTRY_ID` == <registry_id>
+   * `CONTAINER_REGISTRY_TOKEN` = <получить по [ссылке](https://oauth.yandex.ru/authorize?response_type=token&client_id=1a6990aa636648e9b2ef855fa7bec2fb) >
    * `YC_SA_KEY_JSON` with content of key.json
-   * `YC_CLOUD_ID` = b1g9gudn8fcfil33r2v9
-   * `YC_FOLDER_ID` = <folder_id>
    * `YC_INSTANCE_GROUP_ID` = <instance_group_id>
 
 ## TODO
